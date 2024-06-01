@@ -7,7 +7,9 @@ package com.vku.GUI;
 
 import com.vku.DAO.TaiKhoanDAO;
 import com.vku.MODEL.DN_ChuModel;
+import com.vku.MODEL.Taikhoan;
 import javax.swing.JOptionPane;
+import com.vku.Connect.Connect;
 
 /**
  *
@@ -18,6 +20,7 @@ public class DangNhap extends javax.swing.JFrame {
     /**
      * Creates new form DangNhap
      */
+     Connect cn = new Connect();
     public DangNhap() {
         initComponents();
     }
@@ -31,10 +34,9 @@ public class DangNhap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
+        txtUserName = new javax.swing.JTextField();
+        txtPassWord = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         smk = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,8 +46,8 @@ public class DangNhap extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 330, 50));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 320, 50));
+        getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 330, 50));
+        getContentPane().add(txtPassWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 320, 50));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Đăng nhập");
@@ -54,11 +56,7 @@ public class DangNhap extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, 60));
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("Đăng ký");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, 130, 60));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 270, 60));
 
         smk.setText("Hiển thị mật khẩu");
         smk.addActionListener(new java.awt.event.ActionListener() {
@@ -82,38 +80,45 @@ public class DangNhap extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vku/icon/DACS.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 560));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String Username = txtUsername.getText();
-        String Password = txtPassword.getText();
-        if ("".equals(Username)) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tài khoản!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if ("".equals(Password)) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập mật khẩu!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (TaiKhoanDAO.checkLogin(new DN_ChuModel(Username, Password))) {
-            TC_Chu trangChu = new TC_Chu();
-            trangChu.show();
-            this.hide();
-        } else {
-            JOptionPane.showMessageDialog(this, "Tài khoản hoạc mật khẩu sai!", "Hệ thống", JOptionPane.WARNING_MESSAGE);
+
+        String user, pass;
+        user = txtUserName.getText();
+        pass = txtPassWord.getText();
+
+        Taikhoan tk = new Taikhoan();
+        tk.SetUsername(user);
+        tk.SetPassword(pass);
+        boolean check = cn.CheckLogin(tk);
+        int lv = cn.LVTK(tk);
+        if(check == true){
+            if(lv == 2) {
+            TrangChu_NV trangChu_NV = new TrangChu_NV();
+            trangChu_NV.show();
+            dispose();
+            }
+            else if (lv ==1 ){
+                TC_Chu trangChu_C = new TC_Chu();
+                trangChu_C.show();
+                dispose();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void smkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smkActionPerformed
          if(smk.isSelected()){
-            txtPassword.setEchoChar((char)0);
+            txtPassWord.setEchoChar((char)0);
         }
         else {
-            txtPassword.setEchoChar('*');
+            txtPassWord.setEchoChar('*');
         }
     }//GEN-LAST:event_smkActionPerformed
 
@@ -154,13 +159,12 @@ public class DangNhap extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JCheckBox smk;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUsername;
+    private javax.swing.JPasswordField txtPassWord;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

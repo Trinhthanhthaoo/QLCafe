@@ -1,14 +1,16 @@
 package com.vku.Connect;
 
-import com.vku.MODEL.taiKhoan1;
+import com.vku.MODEL.Taikhoan;
 import com.vku.MODEL.Ban;
 import com.vku.Model.ChiTietHD;
 import com.vku.Model.DsOrder;
 import com.vku.Model.HoaDon;
 import com.vku.MODEL.Loai;
 import com.vku.MODEL.ThucDon;
+import com.vku.common.Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,7 +23,7 @@ public class Connect {
 
     public Connect() {
         try {
-            cn = DriverManager.getConnection("jdbc:sqlserver://localhost\\SQLEXPRESS;database=QLCafe;integratedSecurity=true;");
+            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dacs", "root", "");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -309,16 +311,16 @@ public class Connect {
         return update;
     }
 
-    public ArrayList<taiKhoan1> GetTaiKhoan() {
-        ArrayList<taiKhoan1> arrtd = null;
+    public ArrayList<Taikhoan> GetTaiKhoan() {
+        ArrayList<Taikhoan> arrtd = null;
         String sql;
         sql = "SELECT * FROM taikhoan WHERE lv != 1";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            arrtd = new ArrayList<taiKhoan1>();
+            arrtd = new ArrayList<Taikhoan>();
             while (rs.next()) {
-                taiKhoan1 td = new taiKhoan1(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                Taikhoan td = new Taikhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 arrtd.add(td);
             }
         } catch (SQLException ex) {
@@ -434,6 +436,55 @@ public class Connect {
         }
         return arrDs;
     }
+    public boolean CheckLogin(Taikhoan tk)
+    {
+        boolean check = false;
+        String sql;
+            sql = "Select * From taikhoan Where username = '"+tk.GetUsername()+"' AND password='"+tk.GetPassword()+"'";
+        try{
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                check = true;
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi đăng nhập !");
+        }
+        return check; 
+    }
+    public int LVTK(Taikhoan tk)
+    {
+        int lvtk =0;
+        String sql;
+            sql = "Select lv From taikhoan Where username = '"+tk.GetUsername()+"' AND password='"+tk.GetPassword()+"'";
+        try{
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                lvtk = rs.getInt(1);
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
+        }
+        return lvtk; 
+    } 
+    public boolean themTk(Taikhoan account){
+        try {
+            String sql = "INSERT INTO Taikhoan(username, password, lv) VALUES (?, ?, ?)" ;
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setString(1, account.GetUsername());
+            ps.setString(2, account.GetPassword());
+            ps.setInt(3, account.GetLv());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+            return false;
+        }
+        
+      } 
 //     public int InsertChiTietHD(ChiTietHD cthd){
 //        int insert = 0;
 //        String sql = "Insert into chitiethd (MaHoaDon, MaMon, SoLuong, Gia) values ('"+cthd.GetMaHD()+"', '"+cthd.GetMaMon()+"', '"+cthd.GetSoLuong()+"', '"+cthd.GetGia()+"')";

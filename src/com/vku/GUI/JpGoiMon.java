@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.vku.GUI;
+
 import com.vku.Connect.Connect;
-import com.vku.common.Database;
 import com.vku.MODEL.Ban;
 import com.vku.Model.DsOrder;
 import com.vku.Model.HoaDon;
@@ -65,15 +65,15 @@ String TenBan;
         }
         lblTenBan.setText(tenban);
         lbltrangthai.setText(trangthai);
-        // lấy trạng thấy bàn để thực hiện hành động gọi món
-        if(lbltrangthai.getText().equals("free")){
+
+        if(lbltrangthai.getText().equals("Trống")){
             btndatban.setText("Đặt chỗ");
             return;
             
-        }if(lbltrangthai.getText().equals("reserved")){
+        }if(lbltrangthai.getText().equals("Đã đặt trước")){
             btndatban.setText("Hủy đặt");
             return;
-        }if(lbltrangthai.getText().equals("serving")){
+        }if(lbltrangthai.getText().equals("Đang phục vụ")){
             btndatban.setVisible(false);
             btnthugon.setVisible(false);
             jpThucDon thucdon = new jpThucDon();
@@ -101,7 +101,8 @@ String TenBan;
         lblgioden = new javax.swing.JLabel();
         lbltrangthai = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnthugon = new javax.swing.JButton();
+        btndatban = new javax.swing.JButton();
+        btngoi = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jpThongTinThanhToan = new javax.swing.JPanel();
         lbltongtien = new javax.swing.JLabel();
@@ -110,10 +111,9 @@ String TenBan;
         jLabel7 = new javax.swing.JLabel();
         lbltienmon = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnthugon = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jpDsMon = new javax.swing.JPanel();
-        btndatban = new javax.swing.JButton();
-        btngoi = new javax.swing.JButton();
         jpthucdon = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(167, 122, 93));
@@ -126,31 +126,43 @@ String TenBan;
         lblTenBan.setForeground(new java.awt.Color(102, 51, 0));
         lblTenBan.setText("Bàn 1");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 0));
         jLabel2.setText("Giờ đến:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
         jLabel3.setText("Status:");
 
-        lblgioden.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblgioden.setText(".....");
 
-        lbltrangthai.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbltrangthai.setText("....");
 
         jPanel1.setBackground(Color.decode("#e6e6e6"));
 
-        btnthugon.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnthugon.setForeground(new java.awt.Color(0, 51, 51));
-        btnthugon.setText("<<");
-        btnthugon.addActionListener(new java.awt.event.ActionListener() {
+        btndatban.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
+        btndatban.setForeground(new java.awt.Color(102, 51, 0));
+        btndatban.setText("Đặt chỗ");
+        btndatban.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btndatban.setPreferredSize(new java.awt.Dimension(100, 40));
+        btndatban.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnthugonActionPerformed(evt);
+                btndatbanActionPerformed(evt);
             }
         });
-        jPanel1.add(btnthugon);
+        jPanel1.add(btndatban);
+
+        btngoi.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
+        btngoi.setForeground(new java.awt.Color(102, 51, 0));
+        btngoi.setText("Gọi món");
+        btngoi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btngoi.setPreferredSize(new java.awt.Dimension(100, 40));
+        btngoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngoiActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btngoi);
 
         jSeparator1.setBackground(Color.decode("#e6e6e6"));
         jSeparator1.setForeground(new java.awt.Color(21, 75, 158));
@@ -164,26 +176,26 @@ String TenBan;
             }
         });
 
-        lbltongtien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltongtien.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbltongtien.setForeground(new java.awt.Color(255, 0, 0));
         lbltongtien.setText("0");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 0, 51));
         jLabel8.setText("Giảm giá:");
 
-        lblgiamgia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblgiamgia.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lblgiamgia.setForeground(new java.awt.Color(51, 0, 51));
         lblgiamgia.setText("0");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 0, 51));
         jLabel7.setText("Tiền món:");
 
-        lbltienmon.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltienmon.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbltienmon.setText("0");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 0, 0));
         jLabel9.setText("THÀNH TIỀN:");
 
@@ -195,20 +207,22 @@ String TenBan;
                 .addContainerGap()
                 .addGroup(jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpThongTinThanhToanLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(32, 32, 32)
-                        .addComponent(lbltienmon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jpThongTinThanhToanLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(40, 40, 40)
-                        .addComponent(lblgiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGap(6, 6, 6)
+                        .addGroup(jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpThongTinThanhToanLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblgiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                            .addGroup(jpThongTinThanhToanLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbltienmon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(23, 23, 23))
                     .addGroup(jpThongTinThanhToanLayout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbltongtien, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                        .addGap(38, 38, 38))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbltongtien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(44, 44, 44))
         );
         jpThongTinThanhToanLayout.setVerticalGroup(
             jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +231,7 @@ String TenBan;
                 .addGroup(jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(lbltienmon))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(lblgiamgia))
@@ -225,8 +239,17 @@ String TenBan;
                 .addGroup(jpThongTinThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(lbltongtien))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        btnthugon.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnthugon.setForeground(new java.awt.Color(0, 51, 51));
+        btnthugon.setText("<<");
+        btnthugon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnthugonActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setBackground(Color.decode("#e6e6e6"));
         jScrollPane1.setBorder(null);
@@ -249,28 +272,6 @@ String TenBan;
 
         jScrollPane1.setViewportView(jpDsMon);
 
-        btndatban.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btndatban.setForeground(new java.awt.Color(102, 51, 0));
-        btndatban.setText("Đặt chỗ");
-        btndatban.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btndatban.setPreferredSize(new java.awt.Dimension(100, 40));
-        btndatban.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndatbanActionPerformed(evt);
-            }
-        });
-
-        btngoi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btngoi.setForeground(new java.awt.Color(102, 51, 0));
-        btngoi.setText("Gọi món");
-        btngoi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btngoi.setPreferredSize(new java.awt.Dimension(100, 40));
-        btngoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btngoiActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jpThongTinBanLayout = new javax.swing.GroupLayout(jpThongTinBan);
         jpThongTinBan.setLayout(jpThongTinBanLayout);
         jpThongTinBanLayout.setHorizontalGroup(
@@ -291,30 +292,26 @@ String TenBan;
             .addGroup(jpThongTinBanLayout.createSequentialGroup()
                 .addGroup(jpThongTinBanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpThongTinBanLayout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(lblTenBan))
+                        .addGap(42, 42, 42)
+                        .addComponent(jpThongTinThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpThongTinBanLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jpThongTinBanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpThongTinBanLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jpThongTinThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpThongTinBanLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jpThongTinBanLayout.createSequentialGroup()
                 .addGroup(jpThongTinBanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpThongTinBanLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(166, 166, 166)
+                        .addComponent(lblTenBan))
                     .addGroup(jpThongTinBanLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(btndatban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95)
+                        .addComponent(btnthugon, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpThongTinBanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btngoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jpThongTinBanLayout.setVerticalGroup(
             jpThongTinBanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,14 +331,12 @@ String TenBan;
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpThongTinThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jpThongTinBanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btndatban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btngoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(184, 184, 184))
+                .addComponent(jpThongTinThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnthugon, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpthucdon.setBackground(Color.decode("#A77A5D"));
@@ -352,30 +347,32 @@ String TenBan;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jpThongTinBan, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpthucdon, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jpThongTinBan, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jpthucdon, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpthucdon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpthucdon, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
             .addComponent(jpThongTinBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    // xử lý thông tin trạng thái
+
     private void btndatbanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndatbanActionPerformed
-        if(lbltrangthai.getText().equals("reserved")){
-            lbltrangthai.setText("free");
+        if(lbltrangthai.getText().equals("Đã đặt trước")){
+            lbltrangthai.setText("Trống");
             btndatban.setText("Đặt chỗ");
-            String TrangThai = "free";
+            String TrangThai = "Trống";
             Ban b = new Ban(MaBan, TenBan, TrangThai);
             int Update = cn.UpdateBan(b);
             banHangPanel.bh.FillBan();
             banHangPanel.bh.updateUI();
         }else{
-            lbltrangthai.setText("reserved");
+            lbltrangthai.setText("Đã đặt trước");
             btndatban.setText("Hủy đặt");
-            String TrangThai = "reserved";
+            String TrangThai = "Đã đặt trước";
             Ban b = new Ban(MaBan, TenBan, TrangThai);
             int Update = cn.UpdateBan(b);
             banHangPanel.bh.FillBan();
@@ -394,8 +391,8 @@ String TenBan;
             jpThongTinThanhToan.setVisible(false);
             btnthugon.setVisible(true);
             lblgioden.setText("......");
-            lbltrangthai.setText("free");
-            String TrangThai = "free";
+            lbltrangthai.setText("Trống");
+            String TrangThai = "Trống";
             Ban b = new Ban(MaBan, lblTenBan.getText(), TrangThai);
             int Update = cn.UpdateBan(b);
             banHangPanel.bh.FillBan();
@@ -403,19 +400,19 @@ String TenBan;
             btndatban.setVisible(true);
             btndatban.setText("Đặt bàn");
             return;
-            // so sánh nêu chọn thanh toán sẽ hiện thanh toán
+
         }if(btngoi.getText().equals("Thanh toán")){
             DLThanhToan thanhtoan = new DLThanhToan( true, tongtien, TenBan, MaBan, MaHD);//tongtien trang thai ban ten ban
             thanhtoan.setVisible(true);
             return;
-}           // gọi món sẽ hiện thực đơn
+}
         if(btngoi.getText().equals("Gọi món")){
             jpthucdon.setVisible(true);
             Date date = new Date();
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             lblgioden.setText(df.format(date));
-            lbltrangthai.setText("serving");
+            lbltrangthai.setText("Đang phục vụ");
             btndatban.setVisible(false);
             btnthugon.setVisible(false);
             btngoi.setText("Hủy bàn");
@@ -468,8 +465,7 @@ String TenBan;
     private javax.swing.JLabel lbltongtien;
     private javax.swing.JLabel lbltrangthai;
     // End of variables declaration//GEN-END:variables
-    
-// lấy dữ liệu order bên csdl
+
     public void fillDsMon(int mahd){
         if(mahd != 0){
             order = cn.GetDsOrder(mahd);
@@ -477,7 +473,6 @@ String TenBan;
             tienmon = 0;
         }
         mahd = MaHD;
-// nếu đã có món thì sẽ set cái gọn món thành thanh toán để so sánh
         if(order != null){
             jpDsMon.setVisible(true);
             jpThongTinThanhToan.setVisible(true);
@@ -551,7 +546,7 @@ String TenBan;
             @Override
             public void mousePressed(MouseEvent e){
                 Ban b = new Ban();
-                b.SetTrangThai("free");
+                b.SetTrangThai("Trống");
                 b.SetMaBan(MaBan);
                 cn.UpDateTrangThaiBan(b);
 

@@ -15,11 +15,11 @@ import java.sql.SQLException;
 
 public class Database {
   private Connection cn;
-    private static final String URL = "jdbc:sqlserver://localhost\\SQLEXPRESS;database=QLCafe;integratedSecurity=true;";
+//    private static final String URL = "jdbc:mysql://localhost:3306/dacs", "root", "";
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL);
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/dacs", "root", "");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;

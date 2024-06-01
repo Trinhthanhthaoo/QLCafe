@@ -1,66 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.vku.MODEL;
-
-/**
- *
- * @author admin!
- */
 public class Taikhoan {
-    private String id;
-    private String username;
-    private String password;
-    private String lv;
-    
-    public Taikhoan(){
-        
+    private int id, lv;
+    public static String UserName;
+    private String Password;
+    public Taikhoan()
+    {
+        id=lv=0;
+        UserName = "";
+        Password = "";
     }
-
-    public Taikhoan(String id, String username, String password, String lv) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.lv = lv;
+     public Taikhoan(String Username,String PassWord,int lv){
+         this.lv=lv;
+        this.UserName=Username;
+        this.Password=PassWord;
+     }
+    public Taikhoan(int id,String Username,String PassWord,int lv)
+    {
+        this.id=id;
+        this.lv=lv;
+        this.UserName=Username;
+        this.Password=PassWord;
     }
-
-    public String getId() {
-        return id;
+    public void SetID(int id)
+    {
+        this.id=id;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    public int GetID()
+    {
+        return this.id;
     }
-
-    public String getUsername() {
-        return username;
+     public void SetLv(int lv)
+    {
+        this.lv=lv;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public int GetLv()
+    {
+        return this.lv;
     }
-
-    public String getPassword() {
-        return password;
+     public void SetUsername(String Username)
+    {
+        this.UserName=Username;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public String GetUsername()
+    {
+        return this.UserName;
     }
-
-    public String getLv() {
-        return lv;
+     public void SetPassword(String Password)
+    {
+        this.Password=Password;
     }
-
-    public void setLv(String lv) {
-        this.lv = lv;
+    public String GetPassword()
+    {
+        return this.Password;
     }
-
-    @Override
-    public String toString() {
-        return "Taikhoan{" + "id=" + id + ", username=" + username + ", password=" + password + ", lv=" + lv + '}';
-    }
-    
 }

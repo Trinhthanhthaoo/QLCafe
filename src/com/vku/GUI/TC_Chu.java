@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -111,6 +112,7 @@ public class TC_Chu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         bg = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -231,16 +233,23 @@ public class TC_Chu extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vku/icon/Lock.png"))); // NOI18N
+        jLabel11.setText("Thêm tài khoản");
+        jLabel11.setPreferredSize(new java.awt.Dimension(136, 49));
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -248,24 +257,31 @@ public class TC_Chu extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
-                        .addContainerGap(24, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel3)
-                .addGap(68, 68, 68)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel2)
-                .addGap(57, 57, 57)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel5)
-                .addGap(71, 71, 71)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel4)
-                .addGap(72, 72, 72)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel6)
-                .addGap(87, 87, 87)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel7)
-                .addGap(88, 88, 88))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bg.setLayout(new java.awt.BorderLayout());
@@ -279,7 +295,7 @@ public class TC_Chu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 23, Short.MAX_VALUE)
                 .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 1456, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -309,26 +325,33 @@ public class TC_Chu extends javax.swing.JFrame {
           taiTrang(5);
     }//GEN-LAST:event_jLabel5MouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-          taiTrang(4);
-    }//GEN-LAST:event_jLabel4MouseClicked
-
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
        int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
 
       if (choice == JOptionPane.YES_OPTION) {
-        Welcome dn = new Welcome();  // Tạo đối tượng DangNhap mới
-        dn.setVisible(true);           // Hiển thị trang DangNhap
-        this.dispose();                // Đóng trang TrangChu hiện tại
+        DangNhap dn = new DangNhap();
+        dn.show();
+        
+        dispose();                // Đóng trang TrangChu hiện tại
     }
       
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-       ThisPC pc = new ThisPC();
-       pc.show();
-       this.hide();
+      Home h = new Home();
+      h.show();
+      this.hide();
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        DK_TK tk = new DK_TK();
+        tk.show();
+        this.hide();
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        taiTrang(4);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -356,7 +379,13 @@ public class TC_Chu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TC_Chu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -369,6 +398,7 @@ public class TC_Chu extends javax.swing.JFrame {
     private javax.swing.JPanel bg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -386,7 +416,6 @@ public class TC_Chu extends javax.swing.JFrame {
    banHangPanel bhc;
     JpThongKe tK;
     QLChu qlc;
-    
     ThietLap tl;
     MP3 mp3;
     private void taiTrang(int i) {

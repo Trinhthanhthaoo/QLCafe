@@ -34,7 +34,7 @@ import javax.swing.filechooser.FileSystemView;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import java.io.*;
-import javafx.scene.control.Cell;
+//import javafx.scene.control.Cell;
 import javax.swing.UIManager;
 import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
 import org.apache.poi.sl.usermodel.Sheet;
@@ -56,7 +56,7 @@ public static void copyfile(File source, File dest) throws IOException{
 private int currentFontSize = 80;
   public Home() {
         initComponents();
-        txtArea.setVisible(true);
+        textArea.setVisible(true);
  
        
     }
@@ -79,7 +79,7 @@ private int currentFontSize = 80;
         jButton11 = new javax.swing.JButton();
         video = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtArea = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         btnSave = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCopy = new javax.swing.JButton();
@@ -212,10 +212,10 @@ private int currentFontSize = 80;
                 .addGap(30, 30, 30))
         );
 
-        txtArea.setColumns(20);
-        txtArea.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        txtArea.setRows(5);
-        jScrollPane1.setViewportView(txtArea);
+        textArea.setColumns(20);
+        textArea.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         btnSave.setBackground(new java.awt.Color(128, 171, 200));
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vku/icon/Save-icon.png"))); // NOI18N
@@ -440,6 +440,7 @@ private int currentFontSize = 80;
         if (filePath.toLowerCase().endsWith(".xlsx")) {
             readXLSXFile(filePath);
             txtPath.setText(filePath);
+                
         } else {
             JOptionPane.showMessageDialog(null, "Chọn một file Excel (xlsx) hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -451,7 +452,7 @@ private int currentFontSize = 80;
           File fi = new File(txtPath.getText());
           if(fi.delete()){
               JOptionPane.showMessageDialog(this, "Xóa file thành công");
-              txtArea.setText("");
+              textArea.setText("");
               txtPath.setText("");
           }
       }catch(Exception e){
@@ -467,7 +468,7 @@ private int currentFontSize = 80;
     }
 
     try (FileOutputStream fout = new FileOutputStream(filePath)) {
-        String s = txtArea.getText();
+        String s = textArea.getText();
         byte[] b = s.getBytes();
         fout.write(b);
         JOptionPane.showMessageDialog(this, "Lưu dữ liệu thành công");
@@ -498,7 +499,7 @@ private int currentFontSize = 80;
                 while ((line = reader.readLine()) != null) {
                     content.append(line).append("\n");
                 }
-                txtArea.setText(content.toString());
+                textArea.setText(content.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -564,14 +565,14 @@ private int currentFontSize = 80;
         if (result == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getAbsolutePath();
             txtPath.setText(path);
-            txtArea.setText(displayDirectoryTree(new File(path), "", true));
+            textArea.setText(displayDirectoryTree(new File(path), "", true));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
     public static void main(String args[]) {
         
-        try {
+          try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName()
             );
@@ -583,6 +584,9 @@ private int currentFontSize = 80;
                 new Home().setVisible(true);
             }
         });
+        // Đọc tập tin Excel
+//        Home reader = new Home();
+//        reader.readXLSXFile("D:/QuanlyCafe/NhomMon.xlsx");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -602,15 +606,15 @@ private int currentFontSize = 80;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea txtArea;
+    private javax.swing.JTextArea textArea;
     private javax.swing.JTextField txtPath;
     private javax.swing.JButton video;
     // End of variables declaration//GEN-END:variables
     private void readDocxFile(String filePath) {
+        FileInputStream fis = null;
         try {
             File file = new File(filePath);
-            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-
+            fis = new FileInputStream(file);
             XWPFDocument document = new XWPFDocument(fis);
 
             List<XWPFParagraph> paragraphs = document.getParagraphs();
@@ -621,44 +625,54 @@ private int currentFontSize = 80;
                 content.append(para.getText()).append("\n");
             }
 
-            txtArea.setText(content.toString());
+            textArea.setText(content.toString());
 
             fis.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-private void readXLSXFile(String file) {
-    try {
-        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file));
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        StringBuilder content = new StringBuilder();
+ private void readXLSXFile(String file) {
+        try {
+            File excelFile = new File(file);
 
-        // Đọc tiêu đề cột và thêm vào content
-        Row headerRow = sheet.getRow(0);
-        for (org.apache.poi.ss.usermodel.Cell headerCell : headerRow) {
-            content.append(String.format("%-20s", headerCell.toString())).append("\t");
-        }
-        content.append("\n");
-
-        // Lặp qua từng hàng (bỏ qua hàng tiêu đề)
-        for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-            Row row = sheet.getRow(rowIndex);
-            if (row != null) {
-                // Lặp qua từng ô trong hàng và thêm vào content
-                for (org.apache.poi.ss.usermodel.Cell cell : row) {
-                    content.append(String.format("%-20s", cell.toString())).append("\t");
-                }
-                content.append("\n"); // Xuống dòng sau khi kết thúc mỗi hàng
+            // Kiểm tra nếu tập tin rỗng
+            if (excelFile.length() == 0) {
+                System.out.println("File is empty.");
+                return;
             }
-        }
 
-        // Hiển thị nội dung trong textarea
-        txtArea.setText(content.toString());
-    } catch (IOException e) {
-        e.printStackTrace();
+            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file));
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            StringBuilder content = new StringBuilder();
+
+            // Đọc tiêu đề cột và thêm vào content
+            Row headerRow = sheet.getRow(0);
+            for (org.apache.poi.ss.usermodel.Cell headerCell : headerRow) {
+                content.append(String.format("%-20s", headerCell.toString())).append("\t");
+            }
+            content.append("\n");
+
+            // Lặp qua từng hàng (bỏ qua hàng tiêu đề)
+            for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+                Row row = sheet.getRow(rowIndex);
+                if (row != null) {
+                    // Lặp qua từng ô trong hàng và thêm vào content
+                    for (org.apache.poi.ss.usermodel.Cell cell : row) {
+                        content.append(String.format("%-20s", cell.toString())).append("\t");
+                    }
+                    content.append("\n"); // Xuống dòng sau khi kết thúc mỗi hàng
+                }
+            }
+
+            // Hiển thị nội dung trong textarea hoặc nơi khác
+            textArea.setText(content.toString());
+            // Đóng workbook
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
  private String displayDirectoryTree(File dir, String indent, boolean isLast) {
         StringBuilder sb = new StringBuilder();
         sb.append(indent);

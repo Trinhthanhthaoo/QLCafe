@@ -25,10 +25,10 @@ public class QLTKDAO {
             PreparedStatement ps = Database.getConnection().prepareCall(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                String id = rs.getString("id");
+                int id = rs.getInt("id");
                  String username = rs.getString("username");
                  String password = rs.getString("password");
-                 String lv = rs.getString("lv");
+                 int lv = rs.getInt("lv");
                  
                  Taikhoan l = new Taikhoan (id, username, password, lv);
                  tks.add(l);
